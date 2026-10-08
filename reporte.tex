@@ -1,33 +1,70 @@
-\documentclass[12pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
+\documentclass[12pt, letterpaper]{extarticle}
+
+\usepackage{graphicx, eso-pic, fancyhdr, indentfirst}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs}
+\usepackage[margin=2.5cm]{geometry}
 \usepackage[spanish]{babel}
-\usepackage{graphicx}
-\usepackage{geometry}
-\usepackage{lipsum}
-\usepackage{hyperref}
-\usepackage{fancyhdr}
+\usepackage{xurl}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{titlesec}
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=blue, citecolor=black]{hyperref}
 \usepackage{caption}
 
-\geometry{left=2.5cm,right=2.5cm,top=3cm,bottom=3cm}
+\setlength{\parindent}{1cm}
+\setlength{\headheight}{14.5pt}
+\titleformat{\section}{\Large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{0.5em}{}
 
 \begin{document}
+\thispagestyle{empty}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{images/logo_uteq.png} \\ % Descomenta y ajusta si tienes el logo
 
-\begin{titlepage}
-    \centering
-    \vspace*{2cm}
-    {\Huge \textbf{Universidad Tecnológica de Querétaro (UTEQ)}}\\[1cm]
-    {\LARGE \textbf{Ingeniería en Desarrollo y Gestión de Software}}\\[2cm]
-    {\Large \textbf{Proyecto Integrador: Pipeline CI/CD Automatizado para API REST}}\\[3cm]
-    {\large \textbf{Autor:}}\\
-    {\large David Eduardo Quiroz Rivera}\\
-    {\large Matrícula: 2023371160}\\[3cm]
-    {\large \today}\\[2cm]
-\end{titlepage}
+\vspace{1cm}
 
+{\huge \textbf{Proyecto Integrador: Pipeline CI/CD Automatizado para API REST}} \\
+
+\vspace{1.5cm}
+
+{\Large \textbf{Docente:} Jorge García Saldaña} \\
+
+\vspace{1.5cm}
+
+{\Large \textbf{Alumno:} David Eduardo Quiroz Rivera} \\
+
+\vspace{0.3cm}
+
+{\Large \textbf{Matrícula:} 2023371160} \\
+
+\vspace{0.3cm}
+
+{\Large \textbf{Programa:} Ingeniería en Desarrollo y Gestión de Software} \\
+
+\vspace{0.3cm}
+
+{\Large \textbf{Universidad:} Universidad Tecnológica de Querétaro (UTEQ)} \\
+
+\vspace{0.3cm}
+
+{\Large \textbf{Fecha:} \today} \\
+
+\end{center}
+\clearpage
 \newpage
+\pagestyle{fancy}
+
+\fancyhead{}
+\fancyhead[L]{Pipeline CI/CD Automatizado - David Eduardo Quiroz Rivera}
+\fancyhead[R]{\thepage}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0.9pt}
+
 \tableofcontents
-\newpage
 
+\newpage
 \section{Introducción}
 \sloppy % Justify text properly
 El desarrollo de software moderno requiere metodologías que permitan la integración y entrega continua de valor. Este proyecto integrador presenta la implementación de un pipeline de Integración Continua (CI) y Despliegue Continuo (CD) automatizado para una API REST construida con Node.js y el framework NestJS. El propósito principal de este documento es detallar la arquitectura, configuración y beneficios de adoptar dichas prácticas en un entorno de desarrollo profesional.
@@ -40,11 +77,19 @@ El despliegue continuo cierra el ciclo de desarrollo al automatizar la actualiza
 
 El alcance de este proyecto no solo abarca la creación técnica de los endpoints y las pruebas, sino también la conceptualización de una infraestructura eficiente que puede ser escalada en el futuro. A través de la automatización de estos procesos, se reduce significativamente la probabilidad de errores humanos, se aceleran los tiempos de entrega, y se facilita la colaboración entre diferentes miembros del equipo de desarrollo, cumpliendo así con los estándares de la industria actual.
 
-\newpage
 \section{Resultados}
 
 A continuación, se describen los resultados obtenidos tras la implementación del pipeline CI/CD y la arquitectura del proyecto. 
 
+\subsection{Accesos del Proyecto}
+Para la revisión técnica y evaluación, se proveen a continuación los enlaces directos a la infraestructura desplegada y al repositorio:
+
+\begin{itemize}
+    \item \textbf{Repositorio en GitHub:} \url{https://github.com/Stone3999/API_GPDS_DEQR_IDGS16}
+    \item \textbf{URL de Despliegue (AWS EC2):} \url{http://18.188.16.130/api/health} (Endpoint de prueba)
+\end{itemize}
+
+\subsection{Flujo de Trabajo Automatizado (CI)}
 En la Figura \ref{fig:github_actions}, se puede observar el flujo automatizado de GitHub Actions, el cual se dispara ante cualquier evento de \texttt{push} o \texttt{pull\_request} hacia la rama \texttt{main}.
 
 \begin{figure}[h]
@@ -55,6 +100,7 @@ En la Figura \ref{fig:github_actions}, se puede observar el flujo automatizado d
     \label{fig:github_actions}
 \end{figure}
 
+\subsection{Reporte de Cobertura de Código}
 Posteriormente, en la Figura \ref{fig:code_coverage}, se muestra el reporte de cobertura de código (Code Coverage) generado por Jest, superando el umbral mínimo establecido del 70\%.
 
 \begin{figure}[h]
@@ -65,6 +111,7 @@ Posteriormente, en la Figura \ref{fig:code_coverage}, se muestra el reporte de c
     \label{fig:code_coverage}
 \end{figure}
 
+\subsection{Despliegue de la Imagen (CD)}
 Finalmente, la Figura \ref{fig:docker_hub} ilustra la imagen Docker publicada en Docker Hub, la cual ha sido etiquetada correctamente tanto con \texttt{latest} como con el hash exacto del commit correspondiente.
 
 \begin{figure}[h]
@@ -77,7 +124,6 @@ Finalmente, la Figura \ref{fig:docker_hub} ilustra la imagen Docker publicada en
 
 El servidor en AWS EC2 descarga la imagen más reciente de manera automatizada gracias a los comandos enviados vía SSH, mapeando el puerto interno de la aplicación al puerto 80 público para su accesibilidad.
 
-\newpage
 \section{Conclusión}
 
 La implementación de este pipeline CI/CD ha demostrado la viabilidad y los beneficios significativos de la automatización en el ciclo de vida del desarrollo de software. Al integrar herramientas modernas como NestJS, GitHub Actions, Docker y AWS EC2, se ha logrado establecer un entorno donde la calidad del código es validada continuamente, cumpliendo con los estándares de cobertura de pruebas y garantizando que solo el software verificado avance hacia producción. Esto no solo reduce la carga operativa manual, sino que minimiza el riesgo de introducir fallas en un entorno activo.
