@@ -1,0 +1,42 @@
+# Dependencias
+node_modules/
+api/node_modules/
+
+# Archivos de build y compilación
+dist/
+api/dist/
+build/
+*.tsbuildinfo
+
+# Variables de entorno (¡Muy importante que NO se suban!)
+.env
+.env.*
+!.env.example
+
+# Logs de error y depuración
+npm-debug.log
+yarn-error.log
+logs/
+*.log
+
+# Cobertura de pruebas (generado por Jest)
+coverage/
+api/coverage/
+
+# Archivos de SO
+.DS_Store
+Thumbs.db
+
+# Claves SSH (nunca deben subirse)
+*.pem
+*.key
+
+# Archivos generados por LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.pdf

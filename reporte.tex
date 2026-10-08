@@ -1,0 +1,107 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{caption}
+
+\geometry{left=2.5cm,right=2.5cm,top=3cm,bottom=3cm}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge \textbf{Universidad Tecnológica de Querétaro (UTEQ)}}\\[1cm]
+    {\LARGE \textbf{Ingeniería en Desarrollo y Gestión de Software}}\\[2cm]
+    {\Large \textbf{Proyecto Integrador: Pipeline CI/CD Automatizado para API REST}}\\[3cm]
+    {\large \textbf{Autor:}}\\
+    {\large David Eduardo Quiroz Rivera}\\
+    {\large Matrícula: 2023371160}\\[3cm]
+    {\large \today}\\[2cm]
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introducción}
+\sloppy % Justify text properly
+El desarrollo de software moderno requiere metodologías que permitan la integración y entrega continua de valor. Este proyecto integrador presenta la implementación de un pipeline de Integración Continua (CI) y Despliegue Continuo (CD) automatizado para una API REST construida con Node.js y el framework NestJS. El propósito principal de este documento es detallar la arquitectura, configuración y beneficios de adoptar dichas prácticas en un entorno de desarrollo profesional.
+
+La integración continua garantiza que todos los cambios en el código fuente sean automáticamente probados y validados antes de integrarse a la rama principal. Esto se logra mediante el uso de herramientas de automatización como GitHub Actions, las cuales ejecutan una serie de pasos que incluyen la instalación de dependencias, la ejecución de pruebas unitarias y de integración, y la generación de un reporte de cobertura de código. En este proyecto, se ha establecido un umbral mínimo del 70\% de cobertura, asegurando que gran parte de la lógica de negocio esté respaldada por pruebas confiables y robustas.
+
+Adicionalmente, el pipeline incluye la compilación de una imagen Docker optimizada, excluyendo archivos innecesarios como \texttt{node\_modules} y variables de entorno temporales, para asegurar un contenedor ligero y seguro. Esta imagen es posteriormente publicada en Docker Hub utilizando credenciales seguras gestionadas a través de GitHub Secrets, garantizando que ninguna información sensible esté expuesta en el código público.
+
+El despliegue continuo cierra el ciclo de desarrollo al automatizar la actualización de la aplicación en el servidor de producción. En este caso, se ha seleccionado una instancia de Ubuntu Server alojada en AWS EC2. El workflow de GitHub Actions se conecta de manera segura vía SSH a la instancia EC2, descarga la imagen más reciente de la API REST generada, y reinicia el servicio sin tiempos de inactividad perceptibles. Todo este proceso se maneja de forma segura y automatizada.
+
+El alcance de este proyecto no solo abarca la creación técnica de los endpoints y las pruebas, sino también la conceptualización de una infraestructura eficiente que puede ser escalada en el futuro. A través de la automatización de estos procesos, se reduce significativamente la probabilidad de errores humanos, se aceleran los tiempos de entrega, y se facilita la colaboración entre diferentes miembros del equipo de desarrollo, cumpliendo así con los estándares de la industria actual.
+
+\newpage
+\section{Resultados}
+
+A continuación, se describen los resultados obtenidos tras la implementación del pipeline CI/CD y la arquitectura del proyecto. 
+
+En la Figura \ref{fig:github_actions}, se puede observar el flujo automatizado de GitHub Actions, el cual se dispara ante cualquier evento de \texttt{push} o \texttt{pull\_request} hacia la rama \texttt{main}.
+
+\begin{figure}[h]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{images/github_actions_flow.png}
+    \vspace{5cm} % Espacio para la figura
+    \caption{Ejecución exitosa del pipeline de CI/CD en GitHub Actions.}
+    \label{fig:github_actions}
+\end{figure}
+
+Posteriormente, en la Figura \ref{fig:code_coverage}, se muestra el reporte de cobertura de código (Code Coverage) generado por Jest, superando el umbral mínimo establecido del 70\%.
+
+\begin{figure}[h]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{images/code_coverage.png}
+    \vspace{5cm} % Espacio para la figura
+    \caption{Resumen de cobertura de pruebas unitarias utilizando Jest.}
+    \label{fig:code_coverage}
+\end{figure}
+
+Finalmente, la Figura \ref{fig:docker_hub} ilustra la imagen Docker publicada en Docker Hub, la cual ha sido etiquetada correctamente tanto con \texttt{latest} como con el hash exacto del commit correspondiente.
+
+\begin{figure}[h]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{images/docker_hub.png}
+    \vspace{5cm} % Espacio para la figura
+    \caption{Imagen de la API publicada en el repositorio de Docker Hub.}
+    \label{fig:docker_hub}
+\end{figure}
+
+El servidor en AWS EC2 descarga la imagen más reciente de manera automatizada gracias a los comandos enviados vía SSH, mapeando el puerto interno de la aplicación al puerto 80 público para su accesibilidad.
+
+\newpage
+\section{Conclusión}
+
+La implementación de este pipeline CI/CD ha demostrado la viabilidad y los beneficios significativos de la automatización en el ciclo de vida del desarrollo de software. Al integrar herramientas modernas como NestJS, GitHub Actions, Docker y AWS EC2, se ha logrado establecer un entorno donde la calidad del código es validada continuamente, cumpliendo con los estándares de cobertura de pruebas y garantizando que solo el software verificado avance hacia producción. Esto no solo reduce la carga operativa manual, sino que minimiza el riesgo de introducir fallas en un entorno activo.
+
+Asimismo, la gestión estricta de variables sensibles a través de GitHub Secrets asegura que la infraestructura mantenga un alto grado de seguridad. El uso de Docker permite que la aplicación funcione de manera consistente sin importar las variaciones en el entorno subyacente. En definitiva, este proyecto integrador ha permitido consolidar conocimientos de arquitectura backend y DevOps, entregando un sistema robusto, automatizado y listo para adaptarse a las exigencias de la industria del software.
+
+\newpage
+\begin{thebibliography}{9}
+
+\bibitem{nestjs} 
+Kamil Myśliwiec et al. 
+\textit{NestJS - A progressive Node.js framework}. 
+Recuperado de: \url{https://nestjs.com/}
+
+\bibitem{github_actions} 
+GitHub, Inc. 
+\textit{GitHub Actions Documentation}. 
+Recuperado de: \url{https://docs.github.com/en/actions}
+
+\bibitem{docker} 
+Docker Inc. 
+\textit{Docker Documentation}. 
+Recuperado de: \url{https://docs.docker.com/}
+
+\end{thebibliography}
+
+\end{document}

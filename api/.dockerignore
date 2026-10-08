@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+.env
+dist
+logs
+*.log
+.git
+.github
+coverage
+test
+README.md
