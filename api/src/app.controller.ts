@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 
 @Controller()
 export class AppController {
@@ -7,7 +7,7 @@ export class AppController {
 
   @Get('health')
   getHealth() {
-    return { status: 'OK revisando' };
+    return { status: 'ola' };
   }
 
   @Get('users')
