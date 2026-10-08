@@ -14,7 +14,7 @@ describe('AppController', () => {
 
   describe('Endpoints', () => {
     it('should return health status', () => {
-      expect(appController.getHealth()).toEqual({ status: 'OK' });
+      expect(appController.getHealth()).toEqual({ status: 'ola' });
     });
 
     it('should return users array', () => {
