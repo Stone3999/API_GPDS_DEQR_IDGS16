@@ -7,7 +7,7 @@ export class AppController {
 
   @Get('health')
   getHealth() {
-    return { status: 'OK' };
+    return { status: 'OK revisando' };
   }
 
   @Get('users')
